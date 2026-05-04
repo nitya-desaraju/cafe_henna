@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddyetqyxkhfn8"]
+[gd_scene load_steps=5 format=3 uid="uid://ddyetqyxkhfn8"]
 
 [ext_resource type="Script" uid="uid://rlhw5jwmqbyc" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://v7miohyw3g3i" path="res://assets/IMG_1199.PNG" id="2_wu84c"]
+[ext_resource type="Texture2D" uid="uid://cssf87bjb58ry" path="res://assets/start_button.png" id="3_8ln24"]
+[ext_resource type="Texture2D" uid="uid://cjfl5vcoavgjp" path="res://assets/help_button.png" id="4_rtw2f"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_l6cm7")
@@ -8,27 +11,45 @@ script = ExtResource("1_l6cm7")
 [node name="background" type="TextureRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_wu84c")
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 
 [node name="startButton" type="TextureButton" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 422.0
+offset_top = 35.0
+offset_right = 599.0
+offset_bottom = 103.0
+texture_normal = ExtResource("3_8ln24")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="howtoplayButton" type="TextureButton" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 421.0
+offset_top = 117.0
+offset_right = 600.0
+offset_bottom = 170.0
+texture_normal = ExtResource("4_rtw2f")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="overlay" type="ColorRect" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="popup" type="Sprite2D" parent="."]
+visible = false
 
 [node name="closeButton" type="TextureButton" parent="popup"]
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="fader" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+modulate = Color(0, 0, 0, 0)
+offset_right = 1024.0
+offset_bottom = 576.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
