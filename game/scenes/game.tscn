@@ -231,14 +231,15 @@ stretch_mode = 5
 
 [node name="DrawingLayer" type="Control" parent="."]
 anchors_preset = 0
-offset_top = 576.0
+offset_top = -576.0
 offset_right = 1024.0
-offset_bottom = 1152.0
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="DrawingLayer"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 texture = ExtResource("10_trtic")
 flip_v = true
 
@@ -246,6 +247,7 @@ flip_v = true
 layout_mode = 0
 offset_right = 1024.0
 offset_bottom = 576.0
+mouse_filter = 2
 texture = ExtResource("11_ir15t")
 expand_mode = 1
 stretch_mode = 5
@@ -254,6 +256,7 @@ stretch_mode = 5
 layout_mode = 0
 offset_right = 1024.0
 offset_bottom = 576.0
+mouse_filter = 2
 texture = ExtResource("12_ca42v")
 expand_mode = 1
 stretch_mode = 5
@@ -262,6 +265,7 @@ stretch_mode = 5
 anchors_preset = 0
 offset_right = 1024.0
 offset_bottom = 576.0
+mouse_filter = 2
 
 [node name="undo" type="TextureButton" parent="DrawingLayer"]
 layout_mode = 0

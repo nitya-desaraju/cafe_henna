@@ -73,9 +73,12 @@ func _input(event):
 
 func _on_undo_pressed():
 	var lines = drawing_container.get_children()
-	if lines.size() > 0:
-		var last_stroke = lines[-1]
-		last_stroke.queue_free()
+	if lines.size() >= 2:
+		lines[-1].queue_free()
+		lines[-2].queue_free()
+		
+	elif lines.size() == 1:
+		lines[0].queue_free()
 
 func _on_design_selected(index: int):
 	match index:
