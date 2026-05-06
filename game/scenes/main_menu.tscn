@@ -62,7 +62,7 @@ theme = ExtResource("6_jk1qb")
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 32
 text = "How to Play
-Welcome to Cafe Henna! Run your own cafe where you do henna art on your customers. Pick a design or do you own custom one. Trace the lines, then complete. View all of your creations in your library!"
+Welcome to Cafe Henna! Run your own cafe where you do henna art on your customers. Pick a design or do your own custom one. Trace the lines, then complete. View all of your creations in your library!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
