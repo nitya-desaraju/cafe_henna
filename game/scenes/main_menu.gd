@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var music = $music
 @onready var start_button = $startButton
 @onready var how_to_button = $howtoplayButton
 @onready var overlay = $overlay
@@ -22,7 +21,6 @@ func _ready():
 	fader.modulate.a = 1.0
 	fader.visible = true
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
-	music.play()
 	popup.position.y = start_y
 	
 	start_button.mouse_entered.connect(_on_button_hovered.bind(start_button))
@@ -86,6 +84,5 @@ func _on_start_button_pressed():
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	var fade_tween = create_tween().set_parallel(true)
 	fade_tween.tween_property(fader, "modulate:a", 1.0, 1.0)
-	fade_tween.tween_property(music, "volume_db", -80.0, 1.0)
 	await fade_tween.finished
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
