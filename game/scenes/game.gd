@@ -170,16 +170,26 @@ func _on_finish_pressed():
 func take_screenshot():
 	undo_button.visible = false
 	finish_button.visible = false
+
+	await get_tree().process_frame 
 	await RenderingServer.frame_post_draw
-	var img = get_viewport().get_texture().get_image()
+	
+	var viewport = get_viewport()
+	if not viewport: return null
+	
+	var tex = viewport.get_texture()
+	if not tex: return null
+	
+	var img = tex.get_image()
+	if not img: return null
 
 	var x_offset = (1024 - 576) / 2
 	var rect = Rect2i(x_offset, 0, 576, 576)
 	var cropped_img = img.get_region(rect)
-
+	
 	undo_button.visible = true
 	finish_button.visible = true
-
+	
 	return cropped_img
 
 func _show_full_view(tex: Texture2D):
