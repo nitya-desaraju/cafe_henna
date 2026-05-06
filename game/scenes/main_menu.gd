@@ -13,8 +13,8 @@ var bounce = -0.4
 var is_active = false
 var is_closing = false
 
-var start_y = -500.0 
-var target_y = 300.0
+var start_y = -550.0 
+var target_y = -50
 
 func _ready():
 	fader.color = Color(0, 0, 0, 1)
@@ -22,6 +22,7 @@ func _ready():
 	fader.visible = true
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	popup.position.y = start_y
+	overlay.visible = false
 	
 	start_button.mouse_entered.connect(_on_button_hovered.bind(start_button))
 	start_button.mouse_exited.connect(_on_button_unhovered.bind(start_button))
@@ -45,7 +46,7 @@ func _process(delta):
 		if popup.position.y > target_y:
 			popup.position.y = target_y
 			velocity *= bounce
-			
+
 			if abs(velocity) < 50:
 				velocity = 0
 				is_active = false
@@ -66,16 +67,15 @@ func _on_button_unhovered(button: TextureButton):
 	button.modulate = Color(1, 1, 1, 1)
 
 func _on_how_to_play_button_pressed():
-	pass 
-	# overlay.visible = true
-	# overlay.modulate.a = 0.6
-	# velocity = 0
-	# is_active = true
-	# is_closing = false
+	overlay.visible = true
+	overlay.modulate.a = 0.6
+	popup.position.y = start_y
+	velocity = 0
+	is_active = true
+	is_closing = false
 
 func _on_close_popup_button_pressed():
-	pass
-	velocity = -200 
+	velocity = -800 
 	is_active = false
 	is_closing = true
 	overlay.modulate.a = 0

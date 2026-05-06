@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddyetqyxkhfn8"]
+[gd_scene load_steps=9 format=3 uid="uid://ddyetqyxkhfn8"]
 
 [ext_resource type="Script" uid="uid://rlhw5jwmqbyc" path="res://scenes/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://v7miohyw3g3i" path="res://assets/IMG_1199.PNG" id="2_wu84c"]
 [ext_resource type="Texture2D" uid="uid://cssf87bjb58ry" path="res://assets/start_button.png" id="3_8ln24"]
 [ext_resource type="Texture2D" uid="uid://cjfl5vcoavgjp" path="res://assets/help_button.png" id="4_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://cf6eqkqf5i832" path="res://assets/popup.png" id="5_tbmy8"]
+[ext_resource type="Theme" uid="uid://bd6j22lh067yt" path="res://assets/theme.tres" id="6_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://br13iebnufhh" path="res://assets/close.png" id="7_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://bcnl5uxu2l8fy" path="res://assets/closedark.png" id="8_lgwnu"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_l6cm7")
@@ -34,18 +38,47 @@ stretch_mode = 5
 
 [node name="overlay" type="ColorRect" parent="."]
 visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1024.0
+offset_bottom = 576.0
 mouse_filter = 2
+color = Color(0, 0, 0, 0.49411765)
 
-[node name="popup" type="Sprite2D" parent="."]
-visible = false
+[node name="popup" type="TextureRect" parent="."]
+offset_left = 112.0
+offset_top = -550.0
+offset_right = 912.0
+offset_bottom = -50.0
+texture = ExtResource("5_tbmy8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="popup"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 140.0
+offset_right = 670.0
+offset_bottom = 440.0
+theme = ExtResource("6_jk1qb")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "How to Play
+Welcome to Cafe Henna! Run your own cafe where you do henna art on your customers. Pick a design or do you own custom one. Trace the lines, then complete. View all of your creations in your library!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="closeButton" type="TextureButton" parent="popup"]
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 0
+offset_left = 375.0
+offset_top = 440.0
+offset_right = 425.0
+offset_bottom = 490.0
+texture_normal = ExtResource("7_5dd4i")
+texture_hover = ExtResource("8_lgwnu")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="fader" type="ColorRect" parent="."]
+visible = false
 modulate = Color(0, 0, 0, 0)
 offset_right = 1024.0
 offset_bottom = 576.0
