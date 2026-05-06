@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8tgtt7xpecuc"]
+[gd_scene load_steps=9 format=3 uid="uid://c8tgtt7xpecuc"]
 
 [ext_resource type="Script" uid="uid://bmdixmrjw58fk" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dlus4hirpxvsd" path="res://assets/IMG_1209.PNG" id="2_lnu2h"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c1erov2lynu6b" path="res://assets/money.png" id="3_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://c1i8jqfg6plkr" path="res://assets/generated_text (1).png" id="4_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bc5rutd86d7kq" path="res://assets/palm.png" id="4_u5sy4"]
+[ext_resource type="Theme" uid="uid://bd6j22lh067yt" path="res://assets/theme.tres" id="5_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://bbutro147utjd" path="res://assets/back.png" id="5_gee14"]
 
 [node name="Game" type="Control"]
@@ -22,11 +23,12 @@ texture = ExtResource("2_lnu2h")
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
 offset_right = 2048.0
-offset_bottom = 584.0
+offset_bottom = 576.0
 vertical_scroll_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="designsPage" type="Control" parent="ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(1024, 576)
@@ -44,49 +46,99 @@ stretch_mode = 5
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer/HBoxContainer/designsPage"]
 layout_mode = 0
-offset_right = 2436.0
-offset_bottom = 606.0
+offset_left = 112.0
+offset_top = 150.0
+offset_right = 912.0
+offset_bottom = 480.0
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 100
 columns = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer"]
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer" groups=["design_buttons"]]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("4_u5sy4")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Label" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_0tnpc")
+text = "Palm 1
+$15"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer2" groups=["design_buttons"]]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("5_gee14")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Label" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("5_0tnpc")
+text = "Back 1
+$15"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer3" groups=["design_buttons"]]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("4_u5sy4")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Label" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer3"]
 layout_mode = 2
+theme = ExtResource("5_0tnpc")
+text = "Custom Palm
+$20"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer4" groups=["design_buttons"]]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("5_gee14")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Label" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/designsPage/GridContainer/VBoxContainer4"]
 layout_mode = 2
+theme = ExtResource("5_0tnpc")
+text = "Custom Back
+$20"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="right" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="libraryPage" type="Control" parent="ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(1024, 576)
@@ -107,6 +159,11 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="left" type="TextureButton" parent="ScrollContainer/HBoxContainer/libraryPage"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="money" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 795.0
@@ -120,13 +177,20 @@ stretch_mode = 5
 
 [node name="moneyLabel" type="RichTextLabel" parent="money"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 114.38313
+offset_top = 22.214022
+offset_right = 316.00775
+offset_bottom = 64.21402
+theme = ExtResource("5_0tnpc")
+theme_override_font_sizes/normal_font_size = 34
+text = "$0"
+fit_content = true
+horizontal_alignment = 2
 
 [node name="fader" type="ColorRect" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 1024.0
+offset_right = 2048.0
 offset_bottom = 576.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
