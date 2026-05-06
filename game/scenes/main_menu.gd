@@ -18,8 +18,10 @@ var start_y = -500.0
 var target_y = 300.0
 
 func _ready():
-	fader.modulate.a = 0.0
 	fader.color = Color(0, 0, 0, 1)
+	fader.modulate.a = 1.0
+	fader.visible = true
+	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	music.play()
 	popup.position.y = start_y
 	
@@ -31,6 +33,11 @@ func _ready():
 	start_button.pressed.connect(_on_start_button_pressed)
 	how_to_button.pressed.connect(_on_how_to_play_button_pressed)
 	close_popup_button.pressed.connect(_on_close_popup_button_pressed)
+	
+	var fade_in_tween = create_tween()
+	fade_in_tween.tween_property(fader, "modulate:a", 0.0, 1.0)
+	await fade_in_tween.finished
+	fader.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta):
 	if is_active:
@@ -76,6 +83,7 @@ func _on_close_popup_button_pressed():
 	overlay.modulate.a = 0
 
 func _on_start_button_pressed():
+	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	var fade_tween = create_tween().set_parallel(true)
 	fade_tween.tween_property(fader, "modulate:a", 1.0, 1.0)
 	fade_tween.tween_property(music, "volume_db", -80.0, 1.0)
