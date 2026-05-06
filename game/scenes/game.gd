@@ -145,8 +145,9 @@ func _on_finish_pressed():
 	
 	var border_container = PanelContainer.new()
 	border_container.add_theme_stylebox_override("panel", style_box)
+	border_container.pivot_offset = Vector2(50, 50)
 	border_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
+
 	btn.get_parent().remove_child(btn)
 	border_container.add_child(btn)
 	new_vbox.add_child(border_container)
@@ -155,8 +156,8 @@ func _on_finish_pressed():
 	var tex = ImageTexture.create_from_image(screenshot)
 	btn.texture_normal = tex
 
-	btn.mouse_entered.connect(_on_button_hover.bind(btn))
-	btn.mouse_exited.connect(_on_button_unhover.bind(btn))
+	btn.mouse_entered.connect(_on_button_hover.bind(border_container))
+	btn.mouse_exited.connect(_on_button_unhover.bind(border_container))
 	btn.pressed.connect(_show_full_view.bind(tex))
 	
 	library_grid.add_child(new_vbox)
@@ -245,13 +246,13 @@ func scroll_to_page(target_x: int):
 func update_money_display():
 	money_label.text = "$%d" % money
 
-func _on_button_hover(btn: Control):
-	btn.modulate = Color(0.7, 0.7, 0.7, 1)
-	btn.pivot_offset = btn.size / 2
+func _on_button_hover(target: Control):
+	target.modulate = Color(0.7, 0.7, 0.7, 1)
+	target.pivot_offset = target.size / 2
 	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	t.tween_property(btn, "scale", Vector2(1.1, 1.1), 0.15)
+	t.tween_property(target, "scale", Vector2(1.1, 1.1), 0.15)
 
-func _on_button_unhover(btn: Control):
-	btn.modulate = Color(1, 1, 1, 1)
+func _on_button_unhover(target: Control):
+	target.modulate = Color(1, 1, 1, 1)
 	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	t.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.15)
+	t.tween_property(target, "scale", Vector2(1.0, 1.0), 0.15)
