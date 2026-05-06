@@ -6,9 +6,10 @@ func _ready():
 	audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 
-	var music_path = "res://assets/music/cafe_music.wav"
-	audio_player.stream = load(music_path)
-	audio_player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	var music_path = "res://assets/music/cafe_music.mp3"
+	var stream = load(music_path)
+	audio_player.stream = stream
+	audio_player.stream.loop = true
 	
 	audio_player.volume_db = -80 
 	audio_player.play()
