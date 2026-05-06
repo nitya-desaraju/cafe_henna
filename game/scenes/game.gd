@@ -121,7 +121,7 @@ func _on_design_selected(index: int):
 
 func _on_finish_pressed():
 	is_drawing_mode = false
-	
+
 	var prices = [15, 15, 20, 20]
 	money += prices[current_design_index]
 	update_money_display()
@@ -134,6 +134,22 @@ func _on_finish_pressed():
 	var original_vbox = designs_grid.get_child(current_design_index)
 	var new_vbox = original_vbox.duplicate()
 	var btn = new_vbox.get_node("TextureButton")
+	
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color("#472759")
+	style_box.set_corner_radius_all(15)
+	style_box.expand_margin_left = 6
+	style_box.expand_margin_top = 6
+	style_box.expand_margin_right = 6
+	style_box.expand_margin_bottom = 6
+	
+	var border_container = PanelContainer.new()
+	border_container.add_theme_stylebox_override("panel", style_box)
+	border_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	btn.get_parent().remove_child(btn)
+	border_container.add_child(btn)
+	new_vbox.add_child_at(border_container, 0)
 	
 	var tex = ImageTexture.create_from_image(screenshot)
 	btn.texture_normal = tex
@@ -158,28 +174,40 @@ func take_screenshot():
 	var x_offset = (1024 - 576) / 2
 	var rect = Rect2i(x_offset, 0, 576, 576)
 	var cropped_img = img.get_region(rect)
-	
+
 	undo_button.visible = true
 	finish_button.visible = true
-	
+
 	return cropped_img
 
 func _show_full_view(tex: Texture2D):
-	var overlay = TextureRect.new()
-	overlay.name = "FullViewOverlay"
-	overlay.texture = tex
-	overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	overlay.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var expanded_container = PanelContainer.new()
+	expanded_container.name = "FullViewOverlay"
 	
-	overlay.size = Vector2(100, 100)
-	overlay.position = get_global_mouse_position() - Vector2(50, 50)
-	overlay.z_index = 100
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color("#472759")
+	style_box.set_corner_radius_all(20)
+	style_box.expand_margin_left = 10
+	style_box.expand_margin_top = 10
+	style_box.expand_margin_right = 10
+	style_box.expand_margin_bottom = 10
+	expanded_container.add_theme_stylebox_override("panel", style_box)
+
+	var expanded_image = TextureRect.new()
+	expanded_image.texture = tex
+	expanded_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	expanded_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	expanded_container.add_child(expanded_image)
 	
-	add_child(overlay)
+	expanded_container.size = Vector2(100, 100)
+	expanded_container.position = get_global_mouse_position() - Vector2(50, 50)
+	expanded_container.z_index = 100
+	
+	add_child(expanded_container)
 	
 	var t = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	t.tween_property(overlay, "size", Vector2(1024, 576), 0.5)
-	t.tween_property(overlay, "position", Vector2(0, 0), 0.5)
+	t.tween_property(expanded_container, "size", Vector2(1024, 576), 0.5)
+	t.tween_property(expanded_container, "position", Vector2(0, 0), 0.5)
 	
 	await t.finished
 	is_viewing_full_image = true
