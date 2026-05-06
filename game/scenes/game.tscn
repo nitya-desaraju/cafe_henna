@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8tgtt7xpecuc"]
+[gd_scene load_steps=12 format=3 uid="uid://c8tgtt7xpecuc"]
 
 [ext_resource type="Script" uid="uid://bmdixmrjw58fk" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dlus4hirpxvsd" path="res://assets/IMG_1209.PNG" id="2_lnu2h"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bc5rutd86d7kq" path="res://assets/palm.png" id="4_u5sy4"]
 [ext_resource type="Theme" uid="uid://bd6j22lh067yt" path="res://assets/theme.tres" id="5_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://bbutro147utjd" path="res://assets/back.png" id="5_gee14"]
+[ext_resource type="Texture2D" uid="uid://dpqrnhxvhhtva" path="res://assets/lightarrow.png" id="7_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://qxltysmb38v0" path="res://assets/darkarrow.png" id="8_dinhu"]
+[ext_resource type="Texture2D" uid="uid://bwd7fy4hcu7vx" path="res://scenes/home.png" id="9_0tnpc"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -22,8 +25,10 @@ texture = ExtResource("2_lnu2h")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_right = 2048.0
+offset_right = 1024.0
 offset_bottom = 576.0
+mouse_filter = 2
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
@@ -137,8 +142,15 @@ vertical_alignment = 1
 
 [node name="right" type="TextureButton" parent="ScrollContainer/HBoxContainer/designsPage"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 930.6
+offset_top = 238.0
+offset_right = 980.6
+offset_bottom = 338.0
+texture_normal = ExtResource("7_kvpfn")
+texture_hover = ExtResource("8_dinhu")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
 
 [node name="libraryPage" type="Control" parent="ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(1024, 576)
@@ -161,15 +173,21 @@ offset_bottom = 40.0
 
 [node name="left" type="TextureButton" parent="ScrollContainer/HBoxContainer/libraryPage"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 43.4
+offset_top = 238.0
+offset_right = 93.4
+offset_bottom = 338.0
+texture_normal = ExtResource("7_kvpfn")
+texture_hover = ExtResource("8_dinhu")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="money" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 795.0
+offset_left = 800.0
 offset_top = -1.0
-offset_right = 1145.9043
-offset_bottom = 98.9631
+offset_right = 1150.0
+offset_bottom = 99.0
 scale = Vector2(0.51581025, 0.6302326)
 texture = ExtResource("3_lbhrr")
 expand_mode = 1
@@ -186,6 +204,16 @@ theme_override_font_sizes/normal_font_size = 34
 text = "$0"
 fit_content = true
 horizontal_alignment = 2
+
+[node name="home" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 75.0
+offset_bottom = 75.0
+texture_normal = ExtResource("9_0tnpc")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="fader" type="ColorRect" parent="."]
 visible = false

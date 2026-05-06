@@ -36,9 +36,8 @@ func _ready():
 	left_button.pressed.connect(_on_left_pressed)
 	home_button.pressed.connect(_on_home_pressed)
 	
-	for nav_btn in [right_button, left_button, home_button]:
-		nav_btn.mouse_entered.connect(_on_button_hover.bind(nav_btn))
-		nav_btn.mouse_exited.connect(_on_button_unhover.bind(nav_btn))
+	home_button.mouse_entered.connect(_on_button_hover.bind(home_button))
+	home_button.mouse_exited.connect(_on_button_unhover.bind(home_button))
 	
 	update_money_display()
 
