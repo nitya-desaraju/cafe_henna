@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c8tgtt7xpecuc"]
+[gd_scene load_steps=19 format=3 uid="uid://c8tgtt7xpecuc"]
 
 [ext_resource type="Script" uid="uid://bmdixmrjw58fk" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dlus4hirpxvsd" path="res://assets/IMG_1209.PNG" id="2_lnu2h"]
@@ -11,6 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://dpqrnhxvhhtva" path="res://assets/lightarrow.png" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://qxltysmb38v0" path="res://assets/darkarrow.png" id="8_dinhu"]
 [ext_resource type="Texture2D" uid="uid://bwd7fy4hcu7vx" path="res://scenes/home.png" id="9_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://dtjykjqx2jomu" path="res://assets/IMG_1206.PNG" id="10_trtic"]
+[ext_resource type="Texture2D" uid="uid://cbi42e22tdfbe" path="res://assets/palm_base.png" id="11_ir15t"]
+[ext_resource type="Texture2D" uid="uid://1gykxamlp46j" path="res://assets/palm_trace.png" id="12_ca42v"]
+[ext_resource type="Texture2D" uid="uid://caeqstxacsr2t" path="res://assets/undo.png" id="15_ssvqc"]
+[ext_resource type="Texture2D" uid="uid://ufkjkejgj5qg" path="res://assets/undodark.png" id="16_264po"]
+[ext_resource type="Texture2D" uid="uid://dj655a5tkebv8" path="res://assets/finish.png" id="17_1kice"]
+[ext_resource type="Texture2D" uid="uid://dxhxeq8ug2axe" path="res://assets/finishdark.png" id="18_5newe"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -29,7 +36,7 @@ offset_right = 1024.0
 offset_bottom = 576.0
 mouse_filter = 2
 horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
+vertical_scroll_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -166,10 +173,17 @@ texture = ExtResource("4_p57ef")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/libraryPage"]
+[node name="empty" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/libraryPage"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 262.0
+offset_top = 230.0
+offset_right = 762.0
+offset_bottom = 330.0
+theme = ExtResource("5_0tnpc")
+theme_override_font_sizes/normal_font_size = 50
+text = "Your library is empty!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="left" type="TextureButton" parent="ScrollContainer/HBoxContainer/libraryPage"]
 layout_mode = 0
@@ -212,6 +226,62 @@ offset_top = 15.0
 offset_right = 75.0
 offset_bottom = 75.0
 texture_normal = ExtResource("9_0tnpc")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DrawingLayer" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 576.0
+offset_right = 1024.0
+offset_bottom = 1152.0
+
+[node name="TextureRect" type="TextureRect" parent="DrawingLayer"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_trtic")
+flip_v = true
+
+[node name="HandImage" type="TextureRect" parent="DrawingLayer"]
+layout_mode = 0
+offset_right = 1024.0
+offset_bottom = 576.0
+texture = ExtResource("11_ir15t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraceImage" type="TextureRect" parent="DrawingLayer"]
+layout_mode = 0
+offset_right = 1024.0
+offset_bottom = 576.0
+texture = ExtResource("12_ca42v")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DrawingContainer" type="Control" parent="DrawingLayer"]
+anchors_preset = 0
+offset_right = 1024.0
+offset_bottom = 576.0
+
+[node name="undo" type="TextureButton" parent="DrawingLayer"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 35.0
+offset_right = 135.0
+offset_bottom = 135.0
+texture_normal = ExtResource("15_ssvqc")
+texture_hover = ExtResource("16_264po")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="FinishButton" type="TextureButton" parent="DrawingLayer"]
+layout_mode = 0
+offset_left = 889.0
+offset_top = 35.0
+offset_right = 989.0
+offset_bottom = 135.0
+texture_normal = ExtResource("17_1kice")
+texture_hover = ExtResource("18_5newe")
 ignore_texture_size = true
 stretch_mode = 5
 
