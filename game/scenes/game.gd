@@ -149,7 +149,8 @@ func _on_finish_pressed():
 	
 	btn.get_parent().remove_child(btn)
 	border_container.add_child(btn)
-	new_vbox.add_child_at(border_container, 0)
+	new_vbox.add_child(border_container)
+	new_vbox.move_child(border_container, 0)
 	
 	var tex = ImageTexture.create_from_image(screenshot)
 	btn.texture_normal = tex
