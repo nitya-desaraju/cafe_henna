@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bbutro147utjd" path="res://assets/back.png" id="5_gee14"]
 [ext_resource type="Texture2D" uid="uid://dpqrnhxvhhtva" path="res://assets/lightarrow.png" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://qxltysmb38v0" path="res://assets/darkarrow.png" id="8_dinhu"]
-[ext_resource type="Texture2D" uid="uid://bwd7fy4hcu7vx" path="res://scenes/home.png" id="9_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://bwd7fy4hcu7vx" path="res://assets/home.png" id="9_0tnpc"]
 [ext_resource type="Texture2D" uid="uid://dtjykjqx2jomu" path="res://assets/IMG_1206.PNG" id="10_trtic"]
 [ext_resource type="Texture2D" uid="uid://cbi42e22tdfbe" path="res://assets/palm_base.png" id="11_ir15t"]
 [ext_resource type="Texture2D" uid="uid://1gykxamlp46j" path="res://assets/palm_trace.png" id="12_ca42v"]
@@ -184,6 +184,17 @@ theme_override_font_sizes/normal_font_size = 50
 text = "Your library is empty!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/HBoxContainer/libraryPage"]
+visible = false
+layout_mode = 0
+offset_left = 112.0
+offset_top = 150.0
+offset_right = 912.0
+offset_bottom = 480.0
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 100
+columns = 4
 
 [node name="left" type="TextureButton" parent="ScrollContainer/HBoxContainer/libraryPage"]
 layout_mode = 0

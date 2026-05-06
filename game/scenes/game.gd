@@ -12,6 +12,11 @@ extends Control
 @onready var trace_image = $DrawingLayer/TraceImage
 @onready var drawing_container = $DrawingLayer/DrawingContainer
 @onready var undo_button = $DrawingLayer/undo
+@onready var finish_button = $DrawingLayer/FinishButton
+
+@onready var library_grid = $ScrollContainer/HBoxContainer/libraryPage/GridContainer
+@onready var library_empty_label = $ScrollContainer/HBoxContainer/libraryPage/empty
+@onready var designs_grid = $ScrollContainer/HBoxContainer/designsPage/GridContainer
 
 var tex_palm_base = preload("res://assets/palm_base.png")
 var tex_back_base = preload("res://assets/back_base.png")
@@ -22,6 +27,8 @@ var money = 0
 var page_width = 1024
 var is_drawing_mode = false
 var current_line: Line2D
+var current_design_index = 0
+var is_viewing_full_image = false
 
 func _ready():
 	fader.visible = true
@@ -44,6 +51,7 @@ func _ready():
 	left_button.pressed.connect(_on_left_pressed)
 	home_button.pressed.connect(_on_home_pressed)
 	undo_button.pressed.connect(_on_undo_pressed)
+	finish_button.pressed.connect(_on_finish_pressed)
 	
 	home_button.mouse_entered.connect(_on_button_hover.bind(home_button))
 	home_button.mouse_exited.connect(_on_button_unhover.bind(home_button))
@@ -70,17 +78,21 @@ func _input(event):
 				drawing_container.add_child(current_line)
 			else:
 				current_line = null
+				
+	if is_viewing_full_image and event is InputEventMouseButton and event.pressed:
+		_close_full_view()
 
 func _on_undo_pressed():
 	var lines = drawing_container.get_children()
 	if lines.size() >= 2:
 		lines[-1].queue_free()
 		lines[-2].queue_free()
-		
+
 	elif lines.size() == 1:
 		lines[0].queue_free()
 
 func _on_design_selected(index: int):
+	current_design_index = index
 	match index:
 		0:
 			hand_image.texture = tex_palm_base
@@ -107,6 +119,80 @@ func _on_design_selected(index: int):
 	fader.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	is_drawing_mode = true
 
+func _on_finish_pressed():
+	is_drawing_mode = false
+	
+	var prices = [15, 15, 20, 20]
+	money += prices[current_design_index]
+	update_money_display()
+	
+	var screenshot = await take_screenshot()
+
+	library_empty_label.visible = false
+	library_grid.visible = true
+	
+	var original_vbox = designs_grid.get_child(current_design_index)
+	var new_vbox = original_vbox.duplicate()
+	var btn = new_vbox.get_node("TextureButton")
+	
+	var tex = ImageTexture.create_from_image(screenshot)
+	btn.texture_normal = tex
+
+	btn.mouse_entered.connect(_on_button_hover.bind(btn))
+	btn.mouse_exited.connect(_on_button_unhover.bind(btn))
+	btn.pressed.connect(_show_full_view.bind(tex))
+	
+	library_grid.add_child(new_vbox)
+	
+	var slide_up = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	slide_up.tween_property(drawing_layer, "position:y", -576, 0.4)
+	await slide_up.finished
+	scroll_to_page(1024)
+
+func take_screenshot():
+	undo_button.visible = false
+	finish_button.visible = false
+	await RenderingServer.frame_post_draw
+	var img = get_viewport().get_texture().get_image()
+
+	var x_offset = (1024 - 576) / 2
+	var rect = Rect2i(x_offset, 0, 576, 576)
+	var cropped_img = img.get_region(rect)
+	
+	undo_button.visible = true
+	finish_button.visible = true
+	
+	return cropped_img
+
+func _show_full_view(tex: Texture2D):
+	var overlay = TextureRect.new()
+	overlay.name = "FullViewOverlay"
+	overlay.texture = tex
+	overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	overlay.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	
+	overlay.size = Vector2(100, 100)
+	overlay.position = get_global_mouse_position() - Vector2(50, 50)
+	overlay.z_index = 100
+	
+	add_child(overlay)
+	
+	var t = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	t.tween_property(overlay, "size", Vector2(1024, 576), 0.5)
+	t.tween_property(overlay, "position", Vector2(0, 0), 0.5)
+	
+	await t.finished
+	is_viewing_full_image = true
+
+func _close_full_view():
+	var overlay = get_node_or_null("FullViewOverlay")
+	if overlay:
+		var t = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
+		t.tween_property(overlay, "modulate:a", 0.0, 0.3)
+		await t.finished
+		overlay.queue_free()
+	is_viewing_full_image = false
+
 func _on_home_pressed():
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	var fade_out = create_tween()
@@ -132,12 +218,11 @@ func update_money_display():
 
 func _on_button_hover(btn: Control):
 	btn.modulate = Color(0.7, 0.7, 0.7, 1)
-	if btn.is_in_group("design_buttons"):
-		var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		t.tween_property(btn, "scale", Vector2(1.1, 1.1), 0.15)
+	btn.pivot_offset = btn.size / 2
+	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.tween_property(btn, "scale", Vector2(1.1, 1.1), 0.15)
 
 func _on_button_unhover(btn: Control):
 	btn.modulate = Color(1, 1, 1, 1)
-	if btn.is_in_group("design_buttons"):
-		var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		t.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.15)
+	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.15)
