@@ -6,7 +6,7 @@ func _ready():
 	audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 
-	var music_path = "res://assets/music/cafe_music.mp3"
+	var music_path = "res://assets/music/cafe_music.ogg"
 	var stream = load(music_path)
 	audio_player.stream = stream
 	audio_player.stream.loop = true
