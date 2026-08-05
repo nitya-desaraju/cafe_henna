@@ -23,7 +23,7 @@ GlobalMusic="*res://GlobalMusic.gd"
 
 window/size/viewport_width=1024
 window/size/viewport_height=576
-mouse_cursor/custom_image="[empty]"
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
