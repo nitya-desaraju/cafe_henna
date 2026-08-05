@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8tgtt7xpecuc"]
+[gd_scene load_steps=20 format=3 uid="uid://c8tgtt7xpecuc"]
 
 [ext_resource type="Script" uid="uid://bmdixmrjw58fk" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dlus4hirpxvsd" path="res://assets/IMG_1209.PNG" id="2_lnu2h"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dtjykjqx2jomu" path="res://assets/IMG_1206.PNG" id="10_trtic"]
 [ext_resource type="Texture2D" uid="uid://cbi42e22tdfbe" path="res://assets/palm_base.png" id="11_ir15t"]
 [ext_resource type="Texture2D" uid="uid://1gykxamlp46j" path="res://assets/palm_trace.png" id="12_ca42v"]
+[ext_resource type="Texture2D" uid="uid://dw73jihl85lpn" path="res://assets/henna_cone.png" id="13_264po"]
 [ext_resource type="Texture2D" uid="uid://caeqstxacsr2t" path="res://assets/undo.png" id="15_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://ufkjkejgj5qg" path="res://assets/undodark.png" id="16_264po"]
 [ext_resource type="Texture2D" uid="uid://dj655a5tkebv8" path="res://assets/finish.png" id="17_1kice"]
@@ -298,6 +299,18 @@ offset_bottom = 135.0
 texture_normal = ExtResource("17_1kice")
 texture_hover = ExtResource("18_5newe")
 ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CursorIcon" type="TextureRect" parent="DrawingLayer"]
+visible = false
+layout_mode = 0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 322.0
+mouse_filter = 2
+texture = ExtResource("13_264po")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="fader" type="ColorRect" parent="."]

@@ -18,6 +18,8 @@ extends Control
 @onready var library_empty_label = $ScrollContainer/HBoxContainer/libraryPage/empty
 @onready var designs_grid = $ScrollContainer/HBoxContainer/designsPage/GridContainer
 
+@onready var cursor_icon = $DrawingLayer/CursorIcon
+
 var tex_palm_base = preload("res://assets/palm_base.png")
 var tex_back_base = preload("res://assets/back_base.png")
 var tex_palm_trace = preload("res://assets/palm_trace.png")
@@ -59,6 +61,9 @@ func _ready():
 	update_money_display()
 
 func _process(_delta):
+	if is_drawing_mode:
+		cursor_icon.global_position = get_global_mouse_position() - Vector2(0, 222)
+		
 	if is_drawing_mode and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		var pos = drawing_container.get_local_mouse_position()
 		if current_line:
@@ -118,9 +123,14 @@ func _on_design_selected(index: int):
 	await slide.finished
 	fader.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	is_drawing_mode = true
+	
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	cursor_icon.visible = true
 
 func _on_finish_pressed():
 	is_drawing_mode = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	cursor_icon.visible = false
 
 	var prices = [15, 15, 20, 20]
 	money += prices[current_design_index]
@@ -266,4 +276,4 @@ func _on_button_unhover(target: Control):
 	target.modulate = Color(1, 1, 1, 1)
 	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	t.tween_property(target, "scale", Vector2(1.0, 1.0), 0.15)
-    
+	
