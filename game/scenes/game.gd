@@ -208,8 +208,12 @@ func take_screenshot():
 	var img = tex.get_image()
 	if not img: return null
 
-	var x_offset = (1024 - 576) / 2
-	var rect = Rect2i(x_offset, 0, 576, 576)
+	var img_size = img.get_size()
+	var crop_height = img_size.y
+	var crop_width = img_size.y
+	var x_offset = (img_size.x - crop_width) / 2
+	
+	var rect = Rect2i(x_offset, 0, crop_width, crop_height)
 	var cropped_img = img.get_region(rect)
 	
 	undo_button.visible = true
