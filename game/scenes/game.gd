@@ -33,6 +33,15 @@ var current_design_index = 0
 var is_viewing_full_image = false
 
 func _ready():
+	Input.set_custom_mouse_cursor(null)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if cursor_icon:
+		cursor_icon.top_level = true
+		cursor_icon.z_index = 100
+		cursor_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cursor_icon.visible = false
+
 	fader.visible = true
 	fader.modulate.a = 1.0
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -61,7 +70,7 @@ func _ready():
 	update_money_display()
 
 func _process(_delta):
-	if is_drawing_mode:
+	if is_drawing_mode and cursor_icon:
 		cursor_icon.global_position = get_global_mouse_position() - Vector2(0, 222)
 		
 	if is_drawing_mode and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -123,14 +132,18 @@ func _on_design_selected(index: int):
 	await slide.finished
 	fader.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	is_drawing_mode = true
-	
+
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-	cursor_icon.visible = true
+	if cursor_icon:
+		cursor_icon.visible = true
 
 func _on_finish_pressed():
 	is_drawing_mode = false
+	if cursor_icon:
+		cursor_icon.visible = false
+		
+	Input.set_custom_mouse_cursor(null)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	cursor_icon.visible = false
 
 	var prices = [15, 15, 20, 20]
 	money += prices[current_design_index]
@@ -180,6 +193,8 @@ func _on_finish_pressed():
 func take_screenshot():
 	undo_button.visible = false
 	finish_button.visible = false
+	if cursor_icon:
+		cursor_icon.visible = false
 
 	await get_tree().process_frame 
 	await RenderingServer.frame_post_draw
@@ -244,6 +259,13 @@ func _close_full_view():
 	is_viewing_full_image = false
 
 func _on_home_pressed():
+	is_drawing_mode = false
+	if cursor_icon:
+		cursor_icon.visible = false
+
+	Input.set_custom_mouse_cursor(null)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 	fader.mouse_filter = Control.MOUSE_FILTER_STOP
 	var fade_out = create_tween()
 	fade_out.tween_property(fader, "modulate:a", 1.0, 0.8)
@@ -276,4 +298,3 @@ func _on_button_unhover(target: Control):
 	target.modulate = Color(1, 1, 1, 1)
 	var t = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	t.tween_property(target, "scale", Vector2(1.0, 1.0), 0.15)
-	
